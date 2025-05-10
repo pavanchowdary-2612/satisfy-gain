@@ -13,11 +13,14 @@ import {
   Info,
   AlertCircle,
   Clock,
+  Search,
+  ShieldCheck,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Layout from "@/components/Layout"
 import { Button } from "@/components/ui/button"
 import { TrustBadgeGroup } from "@/components/TrustBadge"
+import Link from "next/link"
 
 const DonationPage = () => {
   const router = useRouter()
@@ -44,6 +47,7 @@ const DonationPage = () => {
       category: "Education",
       image:
         "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      govtVerified: true,
     },
     {
       id: 2,
@@ -51,6 +55,7 @@ const DonationPage = () => {
       category: "Healthcare",
       image:
         "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      govtVerified: false,
     },
     {
       id: 3,
@@ -58,6 +63,7 @@ const DonationPage = () => {
       category: "Environment",
       image:
         "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      govtVerified: true,
     },
   ]
 
@@ -249,7 +255,58 @@ const DonationPage = () => {
                         </button>
                       </div>
 
-                      {!useAI ? (
+                      {useAI ? (
+                        <div className="border-2 border-gray-200 rounded-lg p-6">
+                          <div className="flex items-center gap-4 mb-4">
+                            <div className="bg-purple-100 p-2 rounded-lg">
+                              <Sparkles className="h-6 w-6 text-purple-600" />
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-medium text-gray-900">AI-Powered Allocation</h3>
+                              <p className="text-gray-600">
+                                Our AI will distribute your donation to government-verified and active charities based
+                                on real-time needs.
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="space-y-4 mb-4">
+                            {aiCategories.map((category) => (
+                              <div key={category.id}>
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="text-sm font-medium">{category.name}</span>
+                                  <span className="text-sm text-gray-500">{category.percentage}%</span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                  <div
+                                    className="bg-gradient-to-r from-purple-600 to-indigo-600 h-2 rounded-full"
+                                    style={{ width: `${category.percentage}%` }}
+                                  ></div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="bg-yellow-50 p-3 rounded-lg mb-4">
+                            <div className="flex items-start gap-2">
+                              <Info className="h-4 w-4 mt-0.5 text-yellow-600 flex-shrink-0" />
+                              <p className="text-sm text-yellow-800">
+                                AI recommendations are based on current needs, impact potential, and urgency. Funds are
+                                distributed to government-verified charities that are actively working on critical
+                                issues.
+                              </p>
+                            </div>
+                          </div>
+
+                          <Link
+                            href="/ai-recommendations"
+                            className="text-purple-600 hover:text-purple-800 text-sm font-medium flex items-center"
+                          >
+                            <span>View detailed AI recommendations</span>
+                            <ArrowRight className="h-4 w-4 ml-1" />
+                          </Link>
+                        </div>
+                      ) : (
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           {charities.map((charity) => (
                             <div
@@ -272,6 +329,14 @@ const DonationPage = () => {
                                     <Check className="h-4 w-4" />
                                   </div>
                                 )}
+                                {charity.govtVerified && (
+                                  <div
+                                    className="absolute top-2 left-2 bg-green-600 text-white p-1 rounded-full"
+                                    title="Government Verified"
+                                  >
+                                    <ShieldCheck className="h-4 w-4" />
+                                  </div>
+                                )}
                               </div>
                               <div className="p-3">
                                 <h4 className="font-medium text-gray-900">{charity.name}</h4>
@@ -279,46 +344,18 @@ const DonationPage = () => {
                               </div>
                             </div>
                           ))}
-                        </div>
-                      ) : (
-                        <div className="border-2 border-gray-200 rounded-lg p-6">
-                          <div className="flex items-center gap-4 mb-4">
-                            <div className="bg-purple-100 p-2 rounded-lg">
-                              <Sparkles className="h-6 w-6 text-purple-600" />
-                            </div>
-                            <div>
-                              <h3 className="text-lg font-medium text-gray-900">AI-Powered Allocation</h3>
-                              <p className="text-gray-600">
-                                Our AI will distribute your donation to verified and active charities based on real-time
-                                needs.
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="space-y-4 mb-4">
-                            {aiCategories.map((category) => (
-                              <div key={category.id}>
-                                <div className="flex items-center justify-between mb-1">
-                                  <span className="text-sm font-medium">{category.name}</span>
-                                  <span className="text-sm text-gray-500">{category.percentage}%</span>
-                                </div>
-                                <div className="w-full bg-gray-200 rounded-full h-2">
-                                  <div
-                                    className="bg-gradient-to-r from-purple-600 to-indigo-600 h-2 rounded-full"
-                                    style={{ width: `${category.percentage}%` }}
-                                  ></div>
-                                </div>
+                          <Link
+                            href="/charities"
+                            className="flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-purple-300 hover:bg-purple-50 transition-colors"
+                          >
+                            <div className="text-center">
+                              <div className="bg-gray-100 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2">
+                                <Search className="h-5 w-5 text-gray-500" />
                               </div>
-                            ))}
-                          </div>
-
-                          <div className="text-sm text-gray-600 flex items-start gap-2">
-                            <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                            <p>
-                              AI recommendations are based on current needs, impact potential, and your donation
-                              history. You can adjust these allocations if desired.
-                            </p>
-                          </div>
+                              <p className="font-medium text-gray-900">Browse All Charities</p>
+                              <p className="text-sm text-gray-500">Find more verified organizations</p>
+                            </div>
+                          </Link>
                         </div>
                       )}
                     </div>

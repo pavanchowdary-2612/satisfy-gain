@@ -59,6 +59,7 @@ const AIRecommendationsPage = () => {
       location: "Delhi",
       rating: 4.8,
       verified: true,
+      govtVerified: true,
       description: "Providing quality education to underprivileged children across rural India.",
       image:
         "https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -73,6 +74,7 @@ const AIRecommendationsPage = () => {
       location: "Mumbai",
       rating: 4.7,
       verified: true,
+      govtVerified: true,
       description: "Making healthcare accessible to everyone through mobile clinics and telemedicine.",
       image:
         "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -87,6 +89,7 @@ const AIRecommendationsPage = () => {
       location: "Bangalore",
       rating: 4.5,
       verified: true,
+      govtVerified: true,
       description: "Bringing clean water to communities and promoting water conservation.",
       image:
         "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -101,6 +104,7 @@ const AIRecommendationsPage = () => {
       location: "Chennai",
       rating: 4.6,
       verified: true,
+      govtVerified: true,
       description: "Supporting the elderly with healthcare, companionship, and essential services.",
       image:
         "https://images.unsplash.com/photo-1581579438747-104c53d7fbc4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -196,7 +200,8 @@ const AIRecommendationsPage = () => {
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Smart Donation Recommendations</h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Let our AI help you find the perfect causes to support based on your preferences and real-time needs.
+              Let our AI help you find the perfect government-verified causes to support based on your preferences and
+              real-time needs.
             </p>
           </div>
 
@@ -431,6 +436,11 @@ const AIRecommendationsPage = () => {
                                 <div className="flex items-center gap-2">
                                   <h3 className="text-lg font-semibold text-gray-900">{charity.name}</h3>
                                   {charity.verified && (
+                                    <div className="bg-purple-100 p-1 rounded-full">
+                                      <CheckCircle className="h-4 w-4 text-purple-600" />
+                                    </div>
+                                  )}
+                                  {charity.govtVerified && (
                                     <div className="bg-green-100 p-1 rounded-full">
                                       <Shield className="h-4 w-4 text-green-600" />
                                     </div>
@@ -548,7 +558,8 @@ const AIRecommendationsPage = () => {
                     </div>
                     <h3 className="font-medium text-gray-900 mb-2">2. Match with Real Needs</h3>
                     <p className="text-sm text-gray-600">
-                      We match your preferences with real-time needs and verified organizations.
+                      We match your preferences with real-time needs and government-verified organizations that are
+                      actively working.
                     </p>
                   </div>
 

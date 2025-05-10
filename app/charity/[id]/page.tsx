@@ -48,6 +48,7 @@ const CharityDetailPage = () => {
     location: "Delhi, India",
     rating: 4.8,
     verified: true,
+    govtVerified: true,
     established: "2010",
     description:
       "Educate India Foundation is dedicated to providing quality education to underprivileged children across rural India. We believe that education is the most powerful tool to transform lives and create a better future for all.",
@@ -224,8 +225,17 @@ const CharityDetailPage = () => {
                     <h3 className="text-xl font-bold">Fundraising Goal</h3>
                     {charity.verified && (
                       <div className="flex items-center gap-1 bg-green-500/20 px-2 py-1 rounded-full text-xs">
-                        <Shield className="h-3 w-3" />
-                        <span>Verified</span>
+                        {charity.govtVerified ? (
+                          <>
+                            <Shield className="h-3 w-3" />
+                            <span>Government Verified</span>
+                          </>
+                        ) : (
+                          <>
+                            <Shield className="h-3 w-3" />
+                            <span>Platform Verified</span>
+                          </>
+                        )}
                       </div>
                     )}
                   </div>
@@ -454,12 +464,24 @@ const CharityDetailPage = () => {
                   {/* Verification */}
                   <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="bg-green-100 p-3 rounded-full">
-                        <Shield className="h-6 w-6 text-green-600" />
-                      </div>
+                      {charity.govtVerified ? (
+                        <div className="bg-green-100 p-3 rounded-full">
+                          <Shield className="h-6 w-6 text-green-600" />
+                        </div>
+                      ) : (
+                        <div className="bg-purple-100 p-3 rounded-full">
+                          <Shield className="h-6 w-6 text-purple-600" />
+                        </div>
+                      )}
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">Verified Organization</h3>
-                        <p className="text-sm text-gray-600">Thoroughly vetted by SatisfyGain</p>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          {charity.govtVerified ? "Government Verified" : "Platform Verified"}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          {charity.govtVerified
+                            ? "Verified by government authorities"
+                            : "Thoroughly vetted by SatisfyGain"}
+                        </p>
                       </div>
                     </div>
                     <div className="space-y-3">
@@ -467,6 +489,12 @@ const CharityDetailPage = () => {
                         <CheckCircle className="h-5 w-5 text-green-600" />
                         <span className="text-gray-700">Legal Registration Verified</span>
                       </div>
+                      {charity.govtVerified && (
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                          <span className="text-gray-700">80G & 12A Certification</span>
+                        </div>
+                      )}
                       <div className="flex items-center gap-2">
                         <CheckCircle className="h-5 w-5 text-green-600" />
                         <span className="text-gray-700">Financial Transparency</span>
@@ -650,7 +678,8 @@ const CharityDetailPage = () => {
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Impact Measurement</h3>
                         <p className="text-gray-600 mb-4">
-                          We believe in transparent reporting and rigorous impact measurement. Our methodology includes:
+                          We believe in transparent reporting and rigorous impact measurement. Our methodology We
+                          believe in transparent reporting and rigorous impact measurement. Our methodology includes:
                         </p>
                         <ul className="space-y-3">
                           <li className="flex items-start gap-3">
